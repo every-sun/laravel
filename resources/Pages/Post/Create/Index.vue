@@ -8,7 +8,7 @@
                 </div>
                 <textarea rows="8" name="content" id="content" v-model="form.content" class="block w-full resize-none border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 rounded-md shadow-sm ring-1 ring-inset ring-gray-300" placeholder="내용" />
             </div>
-            <button class="w-full bg-secondary text-neutral hover:text-white rounded-md hover:bg-third p-1">전송</button>
+            <Button title="전송"/>
         </form>
     </Layout>
 </template>
@@ -16,17 +16,29 @@
 import Layout from "../../../Components/Layout.vue";
 import { inject, ref } from "vue";
 import {router} from '@inertiajs/vue3';
+import Button from "../../../Components/Button.vue";
+
+const props = defineProps(
+    {
+        data: Object || null || undefined
+    }
+)
 
 const route = inject('route');
 
 const form = ref({
-    title : null,
-    content: null,
-    writer: null
+    title : props.data?.title,
+    content: props.data?.content,
+    writer: props.data?.writer
 })
+console.log(props.data);
 
 const submit = () => {
-    router.post(route('post.store'), form.value)
+    if(props.data===null || props.data===undefined){
+        router.post(route('post.store'), form.value)
+    }else{
+        router.put(route('post.update', {id: props.data.id}), form.value);
+    }
 }
 
 

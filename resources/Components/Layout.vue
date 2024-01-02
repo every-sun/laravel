@@ -20,15 +20,12 @@
             </nav>
         </div>
     </div>
-    <div class="lg:pl-72">
-        <div class="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
-            <p>라라벨 투두리스트</p>
+    <div class="lg:pl-72 h-screen">
+        <div class="sticky top-0 z-40 flex h-[8%] shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
+            <p>{{ title }}</p>
         </div>
-        <h3 class="px-8 py-8 font-bold text-xl">{{ title }}</h3>
-        <main class="py-10 h-screen">
-            <div class="px-4 sm:px-6 lg:px-8">
-                <slot></slot>
-            </div>
+        <main class="py-10 h-[92%] p-4">
+            <slot></slot>
         </main>
     </div>
 </template>
@@ -40,15 +37,18 @@ import {
 import { inject } from "vue";
 
 const props = defineProps(
-    {title: String || null || undefined}
+    {
+        title: String || null || undefined,
+    }
 )
 
 const route = inject('route')
 
 const navigation = [
-    { name: '목록', href: '/', icon: FolderIcon, current: true },
-    { name: '작성', href: route('post.create'), icon: PlusIcon, current: false },
+    { name: '목록', href: '/', icon: FolderIcon, current: route().current('posts.index'), },
+    { name: '작성', href: route('post.create'), icon: PlusIcon, current: route().current('post.create') },
 ]
+
 
 
 </script>
