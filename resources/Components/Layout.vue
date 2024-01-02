@@ -34,11 +34,14 @@ import {
     FolderIcon,
     PlusIcon,
 } from '@heroicons/vue/24/outline'
-import { inject } from "vue";
+import { inject, onMounted, ref } from "vue";
+import Modal from "./Modal.vue";
+import useModal from "../js/libs/useModal.js";
 
 const props = defineProps(
     {
         title: String || null || undefined,
+        modalRef: ref || null || undefined
     }
 )
 
@@ -48,7 +51,6 @@ const navigation = [
     { name: '목록', href: '/', icon: FolderIcon, current: route().current('posts.index'), },
     { name: '작성', href: route('post.create'), icon: PlusIcon, current: route().current('post.create') },
 ]
-
 
 
 </script>

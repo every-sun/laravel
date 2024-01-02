@@ -22,6 +22,11 @@ class PostController extends Controller
         return Inertia::render('Post/Create/Index');
     }
     public function storePost(Request $request){
+        $request->validate([
+            'title'=>'required|max:40',
+            'writer'=>'required',
+            'content'=>'required'
+        ]);
         Post::create([
             'title'=> $request->input('title'),
             'writer'=>$request->input('writer'),
@@ -35,6 +40,11 @@ class PostController extends Controller
         ]);
     }
     public function updatePost(Request $request) {
+        $request->validate([
+            'title'=>'required|max:40',
+            'writer'=>'required',
+            'content'=>'required'
+        ]);
         Post::find($request->route('id'))->update([
             'title'=> $request->input('title'),
             'writer'=>$request->input('writer'),

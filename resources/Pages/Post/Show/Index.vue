@@ -4,8 +4,8 @@
             <div class="px-4 sm:px-0 flex justify-between">
                 <h3 class="text-base font-semibold leading-7 text-gray-900">{{ data.title }}</h3>
                 <div class="flex gap-2">
-                    <Button title="수정" @event="editPostPage"/>
-                    <Button title="삭제" @event="destroyPost"/>
+                    <Button title="수정" @event="editPostPage({id: data.id})"/>
+                    <Button title="삭제" @event="destroyPost({id: data.id})"/>
                 </div>
             </div>
             <div class="mt-6 border-t border-gray-100">
@@ -25,30 +25,27 @@
                 </dl>
             </div>
         </div>
+        <Modal ref="modalRef"/>
     </Layout>
 </template>
 <script setup>
 import Layout from "../../../Components/Layout.vue";
 import useUtils from "../../../js/libs/useUtils.js";
 import Button from "../../../Components/Button.vue";
-import { inject } from "vue";
-import { router } from "@inertiajs/vue3";
+import { ref } from "vue";
+import usePost from "../../../js/libs/controller/usePost.js";
+import Modal from "../../../Components/Modal.vue";
 
-const route = inject('route')
 const props = defineProps(
     {
         data: Object
     }
 )
 
+const modalRef = ref(null);
+
+const {editPostPage, destroyPost} = usePost({modalRef})
+
 const { getLongTime } = useUtils();
-
-const editPostPage = () => {
-    router.get(route('post.edit', {id: props.data.id}));
-}
-
-const destroyPost = () => {
-    router.delete(route('post.destroy', {id: props.data.id}));
-}
 
 </script>
