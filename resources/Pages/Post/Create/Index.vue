@@ -1,16 +1,13 @@
 <template>
-    <Layout title="게시글 작성">
-        <form class="flex flex-col h-80 justify-between" @submit.prevent="submit">
-            <div>
-                <div class="flex gap-1">
-                    <input type="text" name="title" id="title" v-model="form.title" class="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 mb-3" placeholder="제목" />
-                    <input type="text" name="writer" id="writer" v-model="form.writer" class="block rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 mb-3" placeholder="작성자" />
+    <Layout :title="data?'게시글 수정':'게시글 작성'">
+        <form class="flex flex-col h-full justify-between" @submit.prevent="submit">
+                <div>
+                    <div class="flex gap-1 mb-3">
+                        <Input v-model="form.title" name="제목" :error="errors.title"/>
+                        <Input v-model="form.writer" name="작성자" :error="errors.writer"/>
+                    </div>
+                    <TextArea v-model="form.content" name="내용" :error="errors.content"/>
                 </div>
-                <textarea rows="8" name="content" id="content" v-model="form.content" class="block w-full resize-none border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 rounded-md shadow-sm ring-1 ring-inset ring-gray-300" placeholder="내용" />
-            </div>
-            <div>
-                <p>{{ errors }}</p>
-            </div>
             <Button title="전송"/>
         </form>
         <Modal ref="modalRef"/>
@@ -22,6 +19,9 @@ import { ref } from "vue";
 import Button from "../../../Components/Button.vue";
 import usePost from "../../../js/libs/controller/usePost.js";
 import Modal from "../../../Components/Modal.vue";
+import ErrorText from "../../../Components/ErrorText.vue";
+import Input from "../../../Components/Input.vue";
+import TextArea from "../../../Components/TextArea.vue";
 
 const props = defineProps(
     {

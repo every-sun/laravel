@@ -1,5 +1,5 @@
 <template>
-    <div class="flex gap-0.5 p-5">
+    <div class="flex gap-0.5">
         <template v-for="(item, i) in props.links" :key="item.label">
             <Link v-if="item.url" :href="item.url" :class="[(route().params.page===item.label || (!route().params.page && item.label==='1'))?'bg-neutral':'bg-third'] " class="rounded-md text-white px-2 py-1 hover:bg-neutral">
                 {{ i===0?'이전':(i===props.links.length-1?'다음':item.label) }}

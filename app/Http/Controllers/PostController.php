@@ -13,7 +13,11 @@ class PostController extends Controller
             'data' => Post::paginate(10)
         ]);
     }
-    public function showPost(Request $request) : Response{
+    public function showPost(Request $request) {
+        $post = Post::find($request->route('id'));
+        if(!$post){
+            return Inertia::location(route('posts.index'));
+        }
         return Inertia::render('Post/Show/Index', [
             'data'=>Post::find($request->route('id'))
         ]);
@@ -34,9 +38,13 @@ class PostController extends Controller
         ]);
         return to_route('posts.index');
     }
-    public function editPost(Request $request) : Response{
+    public function editPost(Request $request) {
+        $post = Post::find($request->route('id'));
+        if(!$post){
+            return Inertia::location(route('posts.index'));
+        }
         return Inertia::render('Post/Create/Index', [
-            'data'=>Post::find($request->route('id'))
+            'data'=>$post
         ]);
     }
     public function updatePost(Request $request) {

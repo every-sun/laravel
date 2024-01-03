@@ -36,7 +36,6 @@ const props = defineProps({
     title: String || null || undefined,
 })
 
-const emits = defineEmits(['event']);
 
 const open = ref(false)
 const content = ref('실행하시겠습니까?')
@@ -44,7 +43,6 @@ const event = ref(null);
 const clickAgree = () => {
     open.value = false;
     event.value();
-    // emits('event');
 }
 
 defineExpose({
